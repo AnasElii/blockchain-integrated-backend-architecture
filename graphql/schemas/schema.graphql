@@ -1,0 +1,34 @@
+type NFT{
+    id: ID!
+    nftID: String!
+    name: String!
+    description: String!
+    contractAddress: String!
+    # owner: User!
+    owner: String!
+    price: Float!
+    image: String!
+}
+
+type User{
+    id: ID!
+    address: String!
+    name: String!
+    email: String!
+    nfts: [NFT]!
+}
+
+type Query{
+    nfts: [NFT]!
+    nft(id: ID!): NFT!
+    users: [User]!
+    user(id: ID!): User!
+}
+
+type Mutation{
+    createNFT(nftID: String!, name: String!, description: String!, contractAddress: String!, owner: ID!, price: Float!, image: String!): NFT!
+    updateNFT(id: ID!, name: String, description: String, owner: ID, price: Float): NFT!
+
+    createUser(address: String!, name: String!, email: String!): User!
+    updateUser(id: ID!, address: String, name: String, email: String): User!
+}

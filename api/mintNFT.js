@@ -32,25 +32,29 @@ const mintNFT = async (req, res) => {
         
         const NFT_URI = `https://ipfs.io/ipfs/${ipfsResponse.data.ipfsHash}`;
 
+        
         // Main wallet setup
         const mainWallet = new ethers.Wallet(process.env.SEPOLIA_MAIN_PRIVATE_KEY, provider);
         const balance = await provider.getBalance(mainWallet.address);
         const NFTPriceInWei = ethers.parseEther(price);
-
+        
         // Checking the balance
-        if (NFTPriceInWei.gt(balance)) {
+        if (NFTPriceInWei >= balance) { 
             return res.status(400).json({ message: "Insufficient Funds" });
         }
-
+        
         // Interacting with the contract
         const contractWithSigner = new ethers.Contract(
             process.env.NFT_MARKETPLACECONTRACT_ADDRESS,
             NFTMarketplace.abi,
             mainWallet
         )
-
+        
         const listingPrice = await contractWithSigner.listingPrice();
-        console.log("Listing Price: ", listingPrice.toString());
+        console.log("Price: ", price);
+        console.log("Listing Price: ", ethers.formatEther(listingPrice.toString()));
+        console.log("Balance: ", ethers.formatEther(balance.toString()));
+        console.log("NFT Price in Wei: ", ethers.formatEther(NFTPriceInWei.toString()));
 
         // Minting the NFT
         let trans = await contractWithSigner.mintNFT(
@@ -60,7 +64,7 @@ const mintNFT = async (req, res) => {
         );
 
         await trans.wait();
-
+        
         return res.json({ message: "NFT Minted Successfully" });
 
     } catch (error) {

@@ -1,42 +1,86 @@
+const axios = require('axios');
 const FormData = require('form-data');
+
+require('dotenv').config();
 
 // Define Pinata API endpoints and headers
 const PINATA_FILE_URL = "https://api.pinata.cloud/pinning/pinFileToIPFS";
 const PINATA_METADATA_URL = "https://api.pinata.cloud/pinning/pinJSONToIPFS";
 
+// Extract file data from the request
+function extractFileData(data) {
+    let fileBuffer;
+    let fileName;
+
+    data._streams.forEach(stream => {
+        if (typeof stream === 'string') {
+            if (stream.includes('filename=')) {
+                const match = stream.match(/filename="(.+?)"/);
+                if (match) {
+                    fileName = match[1];
+                }
+            }
+        } else if (Buffer.isBuffer(stream)) {
+            fileBuffer = stream;
+        }
+    });
+
+    return { fileBuffer, fileName };
+}
+
+const pinJSONToIPFS = async (url, data) => {
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${process.env.PINATA_JWT_TOKEN}`,
+            "Content-Type": "application/json"
+        },
+        body: data,
+    });
+
+    // Check for successful response
+    if (!response.ok) {
+        throw new Error(`Error pinning to IPFS: ${response.statusText}`);
+    }
+
+    return await response.json();
+};
+
+const pinFileToIPFS = async (url, data) => {
+    let { fileBuffer, fileName } = extractFileData(data);
+
+    const fileData = new FormData();
+    fileData.append('file', fileBuffer, fileName);
+
+    const response = await axios.post(
+        url,
+        fileData,
+        {
+            headers: {
+                Authorization: `Bearer ${process.env.PINATA_JWT_TOKEN}`,
+            },
+        }
+    );
+
+    // Check for successful response
+    if (response.statusText !== 'OK') {
+        throw new Error(`Error pinning to IPFS: ${response.statusText}`);
+    }
+
+    return response.data;
+};
+
 const pinToIPFS = async (url, data, apiType) => {
-    let pinataHeaders = {};
-
-    // Set the headers for the Pinata API
-    if (apiType === "FILE") {
-        pinataHeaders = {
-            Authorization: `Bearer ${process.env.PINATA_JWT_TOKEN}`,
-        };
-    }
-    if (apiType === "JSON") {
-        pinataHeaders = {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.PINATA_JWT_TOKEN}`,
-        };
-    }
-
     try {
 
-        // Make a POST request to Pinata API
-        const response = await fetch(url, {
-            method: "POST",
-            headers: { ...pinataHeaders },
-            body: data,
-        });
-
-        // Check for successful response
-        if (!response.ok) {
-            throw new Error(`Error pinning to IPFS: ${response.statusText}`);
+        if (apiType === "JSON") {
+            return await pinJSONToIPFS(url, data);
         }
 
-        // Parse and return the response JSON
-        const responseData = await response.json();
-        return responseData;
+        if (apiType === "FILE") {
+            return await pinFileToIPFS(url, data);
+        }
+
     } catch (error) {
         console.error("Error pinning to IPFS: ", error);
         throw error;
@@ -59,7 +103,7 @@ const POST = async (req, res) => {
 
         // Create a new FormData object for the image data
         const fileData = new FormData();
-        fileData.append("file", NFT_IMAGE.buffer);
+        fileData.append("file", req.file.buffer, NFT_NAME);
         fileData.append("pinataMetadata", JSON.stringify({
             name: NFT_NAME,
         }));
@@ -84,11 +128,7 @@ const POST = async (req, res) => {
 
         // Return the IPFS CID of the metadata
         console.log("Metadata successfully pinned: ", metadataCID.IpfsHash);
-        return new Response(JSON.stringify({ IpfsHash: metadataCID.IpfsHash }), {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
+        return res.status(200).json({ IpfsHash: metadataCID.IpfsHash });
     } catch (error) {
         console.error("POST Error pinning to IPFS: ", error);
         return new Response(JSON.stringify({ error: "Error pinning to IPFS", message: error.message }), {

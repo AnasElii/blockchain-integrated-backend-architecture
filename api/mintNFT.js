@@ -30,9 +30,6 @@ const mintNFT = async (req, res) => {
             headers: formData.getHeaders()
         });
         
-        // console.log("IPFS Response: ", ipfsResponse.data.ipfsHash);
-        // return res.status(200).json({ message: `${name} | ${description} | ${price} | ${image} | ${image.originalname}` });
-        return;
         const NFT_URI = `https://ipfs.io/ipfs/${ipfsResponse.data.ipfsHash}`;
 
         // Main wallet setup

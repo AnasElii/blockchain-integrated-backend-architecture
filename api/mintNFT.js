@@ -3,7 +3,7 @@ const axios = require('axios');
 const ethers = require('ethers');
 const FormData = require('form-data');
 
-const { provider, contract } = require('../config/ethersConfig');
+const { provider, signer, contractWithSigner, contractWithProvider } = require('../config/ethersConfig');
 const NFTMarketplace = require('../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json');
 
 const mintNFT = async (req, res) => {
@@ -24,37 +24,24 @@ const mintNFT = async (req, res) => {
         formData.append('price', price);
         // formData.append('file', image.buffer, image.originalname);
         formData.append('image', req.file.buffer, req.file.originalname);
-        
+
         // Uploading the image to IPFS
         const ipfsResponse = await axios.post('http://localhost:4000/api/nftToIPFS', formData, {
             headers: formData.getHeaders()
         });
         
-        const NFT_URI = `https://ipfs.io/ipfs/${ipfsResponse.data.ipfsHash}`;
+        const NFT_URI = `https://ipfs.io/ipfs/${ipfsResponse.data.IpfsHash}`;
 
-        
         // Main wallet setup
-        const mainWallet = new ethers.Wallet(process.env.SEPOLIA_MAIN_PRIVATE_KEY, provider);
-        const balance = await provider.getBalance(mainWallet.address);
+        const balance = await provider.getBalance(signer.address);
         const NFTPriceInWei = ethers.parseEther(price);
-        
+
         // Checking the balance
-        if (NFTPriceInWei >= balance) { 
+        if (NFTPriceInWei >= balance) {
             return res.status(400).json({ message: "Insufficient Funds" });
         }
-        
-        // Interacting with the contract
-        const contractWithSigner = new ethers.Contract(
-            process.env.NFT_MARKETPLACECONTRACT_ADDRESS,
-            NFTMarketplace.abi,
-            mainWallet
-        )
-        
+
         const listingPrice = await contractWithSigner.listingPrice();
-        console.log("Price: ", price);
-        console.log("Listing Price: ", ethers.formatEther(listingPrice.toString()));
-        console.log("Balance: ", ethers.formatEther(balance.toString()));
-        console.log("NFT Price in Wei: ", ethers.formatEther(NFTPriceInWei.toString()));
 
         // Minting the NFT
         let trans = await contractWithSigner.mintNFT(
@@ -64,7 +51,7 @@ const mintNFT = async (req, res) => {
         );
 
         await trans.wait();
-        
+
         return res.json({ message: "NFT Minted Successfully" });
 
     } catch (error) {

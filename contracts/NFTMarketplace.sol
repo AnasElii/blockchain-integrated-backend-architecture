@@ -40,6 +40,14 @@ contract NFTMarketplace is ERC721URIStorage {
         return Counters.current(_nftIds);
     }
 
+     function getListingPrice() external view returns (uint) {
+        return listingPrice;
+    }
+
+    function getNFT(uint id) external view returns (NFT memory) {
+        return _idToNFT[id];
+    }
+
     function mintNFT(string memory _tokenURI, uint price) external payable {
         uint nftId = Counters.current(_nftIds);
 

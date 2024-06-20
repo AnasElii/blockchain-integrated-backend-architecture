@@ -127,7 +127,6 @@ const POST = async (req, res) => {
         );
 
         // Return the IPFS CID of the metadata
-        console.log("Metadata successfully pinned: ", metadataCID.IpfsHash);
         return res.status(200).json({ IpfsHash: metadataCID.IpfsHash });
     } catch (error) {
         console.error("POST Error pinning to IPFS: ", error);

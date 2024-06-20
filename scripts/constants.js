@@ -12,9 +12,9 @@ async function getInitializedContract() {
             Counters: counters,
         }
     });
-    const marketplace = await NFTMarketplace.attach(process.env.NFT_MARKETPLACECONTRACT_ADDRESS);
+    const marketplace = await NFTMarketplace.attach(process.env.NFT_MARKETPLACE_CONTRACT_ADDRESS);
     
-    const listingPrice = await marketplace.listingPrice();
+    const listingPrice = await marketplace.getListingPrice();
     const accounts = await ethers.getSigners();
 
     return { marketplace, accounts, listingPrice };

@@ -1,22 +1,28 @@
 const ethers = require('ethers');
+const axios = require('axios');
 const nftModel = require('../models/nftModel');
-const { contract } = require('../config/ethersConfig');
+const { contractWithProvider } = require('../config/ethersConfig');
 
 const nftEventHandler = async () => {
-    contract.on("NFTListed", async (id, contractAddress, owner, price) => {
 
+    contractWithProvider.on("NFTListed", async (id, contractAddress, owner, price) => {
         try {
-            // if (!nftID || !contractAddress || !owner || !price)
-            //     throw new Error("All fields are required to create an NFT");
+            if (!id || !contractAddress || !owner || !price)
+                throw new Error("All fields are required to create an NFT");
+
+            // Get the NFT details from the Pinata API
+            const tokenURI = await contractWithProvider.tokenURI(id);
+            const response = await axios.get(tokenURI);
+            const { name, description, image } = response.data;
 
             const newNFT = new nftModel({
                 nftID: id,
-                name: "NFT",
-                description: "NFT",
+                name,
+                description,
                 contractAddress,
                 owner,
                 price,
-                image: `https://ipfs.io/ipfs/${process.env.IPFS_CID}`
+                image
             });
 
             // Save the new NFT to the database
@@ -31,7 +37,7 @@ const nftEventHandler = async () => {
 
     });
 
-    contract.on("NFTTransfer", async (id, seller, buyer) => {
+    contractWithProvider.on("NFTTransfer", async (id, seller, buyer) => {
         try {
             // if (!id) {
             //     throw new Error("NFT ID is required to update an NFT");
@@ -55,6 +61,7 @@ const nftEventHandler = async () => {
         //     await nft.save();
         // }
     });
+    
 }
 
 module.exports = nftEventHandler;

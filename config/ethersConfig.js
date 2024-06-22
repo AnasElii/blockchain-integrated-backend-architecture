@@ -7,7 +7,7 @@ const provider = new ethers.JsonRpcProvider(`https://eth-sepolia.g.alchemy.com/v
 
 // Get smart contract
 const contractWithProvider = new ethers.Contract(
-    process.env.NFT_MARKETPLACECONTRACT_ADDRESS,
+    process.env.NFT_MARKETPLACE_CONTRACT_ADDRESS,
     NFTMarketplace.abi,
     provider
 )
@@ -17,7 +17,7 @@ const signer = new ethers.Wallet(process.env.SEPOLIA_MAIN_PRIVATE_KEY, provider)
 
 // Interacting with the contract
 const contractWithSigner = new ethers.Contract(
-    process.env.NFT_MARKETPLACECONTRACT_ADDRESS,
+    process.env.NFT_MARKETPLACE_CONTRACT_ADDRESS,
     NFTMarketplace.abi,
     signer
 )

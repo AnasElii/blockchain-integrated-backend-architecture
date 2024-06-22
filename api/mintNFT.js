@@ -22,7 +22,6 @@ const mintNFT = async (req, res) => {
         formData.append('name', name);
         formData.append('description', description);
         formData.append('price', price);
-        // formData.append('file', image.buffer, image.originalname);
         formData.append('image', req.file.buffer, req.file.originalname);
 
         // Uploading the image to IPFS

@@ -18,6 +18,7 @@ Since we are using the Hardhat local network, set the network name to "localhost
 npx hardhat ignition deploy ./ignition/modules/NFTMarketplace.js --network localhost
 ```
 
+# Deploy To Hardhat Live Network
 ## Setup Vars In Hardhat Config
 
 - **Set ALCHEMY API KEY**: Begin by setting the necessary variables using the following command. 

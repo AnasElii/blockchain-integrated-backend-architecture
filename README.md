@@ -54,7 +54,7 @@ This project is initially designed to work seamlessly with `MongoDB` by default.
 ## Usage
   
 1. **Deploy Smart Contracts**
-  Follow the instructions in the ![`contracts/`](https://github.com/AnasElii/blockchain-integrated-backend-architecture/tree/master/contracts) directory to deploy smart contracts using Hardhat to your preferred blockchain network.
+  Follow the instructions in the [`contracts/`](https://github.com/AnasElii/blockchain-integrated-backend-architecture/tree/master/contracts) directory to deploy smart contracts using Hardhat to your preferred blockchain network.
   
 1. **Start the Backend Server**
    ```bash

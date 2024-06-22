@@ -1,4 +1,4 @@
-# Blockchain integrated backend architecture
+# Blockchain-Integrated Backend Architecture
 
 
 ## Overview
@@ -60,7 +60,7 @@ This project is initially designed to work seamlessly with `MongoDB` by default.
    ```bash
    node ./index.js
    ```
-   Ensure your PHP server is configured correctly and running.
+   Ensure your Express server is configured correctly and running.
 
 
 1. **Access the Marketplace Backend**

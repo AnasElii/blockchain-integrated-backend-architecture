@@ -2,8 +2,9 @@
 const axios = require('axios');
 const ethers = require('ethers');
 const FormData = require('form-data');
+require('dotenv').config();
 
-const { provider, signer, contractWithSigner, contractWithProvider } = require('../config/ethersConfig');
+const { provider, signer, contractWithSigner } = require('../config/ethersConfig');
 const NFTMarketplace = require('../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json');
 
 const mintNFT = async (req, res) => {
@@ -25,7 +26,7 @@ const mintNFT = async (req, res) => {
         formData.append('image', req.file.buffer, req.file.originalname);
 
         // Uploading the image to IPFS
-        const ipfsResponse = await axios.post('http://localhost:4000/api/nftToIPFS', formData, {
+        const ipfsResponse = await axios.post(`http://localhost:${process.env.PORT}/api/nftToIPFS`, formData, {
             headers: formData.getHeaders()
         });
         

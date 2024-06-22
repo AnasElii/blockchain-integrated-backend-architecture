@@ -3,7 +3,20 @@
 
 ## Overview
 
-In this quick tutorial, you'll learn how to deploy your smart contract to the Sepolia testnet using Hardhat and the Alchemy platform. The same steps can be applied for deploying to other platforms like Infura, as well as other testnets or mainnets such as Ethereum.
+In this quick tutorial, you'll learn how to deploy your smart contract to the local and live network, using both Hardhat localhost network and  Sepolia testnet. By using Hardhat and the Alchemy platform. The same steps can be applied for deploying to other platforms like Infura, as well as other testnets or mainnets such as Ethereum.
+
+## Deploy To Hardhat Local Network
+- **Run the Hardhat Nood**: To deploy the smart contract to a Hardhat local network, start the Hardhat node on port 3000:
+  `npx hardhat node --hostname 0.0.0.0 --port 3000`
+
+- **Deploy the martcontract to the local network**: After starting the node, deploy the smart contract using the following command:
+```bash
+npx hardhat ignition deploy ./ignition/modules/NFTMarketplace.js --network <network-name>
+```
+Since we are using the Hardhat local network, set the network name to "localhost" as specified in the hardhat.config.js file:
+```bash
+npx hardhat ignition deploy ./ignition/modules/NFTMarketplace.js --network localhost
+```
 
 ## Setup Vars In Hardhat Config
 

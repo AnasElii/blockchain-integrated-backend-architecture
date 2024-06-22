@@ -7,17 +7,25 @@ Blockchain integrated backend is the Hybrid backend of the NFT Marketplace decen
 
 ## Features
 
-- **Decentralized and Centralized Backend**: Combines the strengths of both decentralized and centralized systems to balance cost and performance.
-- **Cost-Efficient Smart Contracts**: Designed to minimize gas fees and other costs associated with blockchain transactions.
-- **Secure Transactions**: Emphasis on maintaining the security and integrity of the NFT store.
-- **Technology Stack**: Utilizes Node.js with Express for the backend, and various databases, including MongoDB, to manage and store data efficiently.
+- **Decentralized and Centralized Backend**
+Combines the strengths of both decentralized and centralized systems to balance cost and performance.
+- **Cost-Efficient Smart Contracts**
+Designed to minimize gas fees and other costs associated with blockchain transactions.
+- **Secure Transactions**
+Emphasis on maintaining the security and integrity of the NFT store.
+- **Technology Stack**
+Utilizes Node.js with Express for the backend, and various databases, including MongoDB, to manage and store data efficiently.
 
 ## Technology Stack
 
-- **Decentralized Backend (Blockchain)**: Smart contracts developed using Hardhat and OpenZeppelin, deployed on a blockchain platform
-- **Centralized Backend**: Node.js, Express, Graphql, Ethers.js, and more...
-- **InterPlanetary File System**: This project leverages Pinata for storing and retrieving media on IPFS, enhancing its decentralized architecture. Additionally, it’s designed to facilitate a smooth transition to a fully serverless backend. However, you have the option to modify the project to store all data on a central server instead of IPFS
-- **Databases**: This project is initially designed to work seamlessly with `MongoDB` by default. However, it can easily be adapted to integrate with other centralized or decentralized database solutions
+- **Decentralized Backend (Blockchain)**
+Smart contracts developed using Hardhat and OpenZeppelin, deployed on a blockchain platform
+- **Centralized Backend**
+Node.js, Express, GraphQl, Ethers.js, and more...
+- **InterPlanetary File System**
+This project leverages Pinata for storing and retrieving media on IPFS, enhancing its decentralized architecture. Additionally, it’s designed to facilitate a smooth transition to a fully serverless backend. However, you have the option to modify the project to store all data on a central server instead of IPFS
+- **Databases**
+This project is initially designed to work seamlessly with `MongoDB` by default. However, it can easily be adapted to integrate with other centralized or decentralized database solutions
 
 ## Installation
 
@@ -42,29 +50,23 @@ Blockchain integrated backend is the Hybrid backend of the NFT Marketplace decen
    - Visit `Pinata Cloud` to sign up for a new free account.
    - add the `PINATA_JWT_TOKEN` and `NEXT_PUBLIC_NFT_MARKETPLACE_ADDRESS` fields
    - Add necessary configuration settings (database credentials, blockchain network settings, etc.).
-  
-4. **Run the Hardhat Nood**
-   If you are going to deploy the smart contract to a hardhat local network
-   deploy it in the port 3000
-   `npx hardhat node --hostname 0.0.0.0 --port 3000`
 
-1. **Run the Application**
+## Usage
+  
+1. **Deploy Smart Contracts**
+  Follow the instructions in the `contracts/` directory to deploy smart contracts using Hardhat to your preferred blockchain network.
+  
+1. **Start the Backend Server**
    ```bash
    node ./index.js
    ```
-
-## Usage
-
-1. **Deploy Smart Contracts**
-  Follow the instructions in the `contracts/` directory to deploy smart contracts using Hardhat and OpenZeppelin to your preferred blockchain network.
-  
-
-1. **Start the Backend Server**
    Ensure your PHP server is configured correctly and running.
 
 
-1. **Access the Marketplace**
-   - Open your browser and navigate to `http://localhost:3001` to start using the NFT Marketplace.
+1. **Access the Marketplace Backend**
+ Open your browser and navigate to `http://localhost:4000`, and also the `http://localhost:4000/graphql` To access the NFT_MArketplace Grpahql playground.
+
+**Note** You can update the port value from the envirment by chaging the PORT value in the `.evn` file
 
 ## Educational Resource
 

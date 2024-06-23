@@ -84,7 +84,7 @@ For example, to update the existing script, ensure `ignition/modules/deployedSma
 
 Make sure to configure the new script to match the deployment requirements of your new smart contract.
 
-
+## Validate the Smart Contract
 
 
 

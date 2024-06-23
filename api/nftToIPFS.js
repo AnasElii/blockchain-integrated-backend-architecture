@@ -127,7 +127,7 @@ const POST = async (req, res) => {
         );
 
         // Return the IPFS CID of the metadata
-        return res.status(200).json({ IpfsHash: metadataCID.IpfsHash });
+        return res.status(200).json({ IpfsHash: metadataCID.IpfsHash, image: nftMetadata.image, message: "NFT pinned to IPFS"});
     } catch (error) {
         console.error("POST Error pinning to IPFS: ", error);
         return new Response(JSON.stringify({ error: "Error pinning to IPFS", message: error.message }), {

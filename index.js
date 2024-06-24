@@ -1,5 +1,6 @@
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
+const expressPlayground = require('graphql-playground-middleware-express').default;
 const multer = require('multer');
 
 const connectDB = require('./config/db');
@@ -12,7 +13,7 @@ const { POST } = require('./api/nftToIPFS');
 const app = express();
 
 // Middleware to parse JSON bodies
-app.use(express.json()); 
+app.use(express.json());
 
 // MIddleware for handling multipart/form-data
 const upload = multer();
@@ -21,6 +22,8 @@ const upload = multer();
 connectDB();
 
 // Create express server and GraphQl endpoint
+app.get('/playground', expressPlayground({ endpoint: '/graphql' }))
+
 app.use('/graphql', graphqlHTTP({
     schema,
     rootValue,
@@ -31,14 +34,14 @@ app.use('/graphql', graphqlHTTP({
 nftEventHandler();
 
 // Routes
-app.post('/api/mintNFT', upload.single('image') ,mintNFT);
+app.post('/api/mintNFT', upload.single('image'), mintNFT);
 
 // Handle POST requests
 app.post('/api/nftToIPFS', upload.single('image'), POST);
 
 // Start the server
 app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port http://localhost:${process.env.PORT}/graphql`);
+    console.log(`Server is running on port http://localhost:${process.env.PORT}/playground`);
 });
 
 

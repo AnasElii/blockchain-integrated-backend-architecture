@@ -3,7 +3,6 @@ const ethers = require('ethers');
 const FormData = require('form-data');
 require('dotenv').config();
 
-const eventEmitter = require('../event/eventEmitter');
 const { provider, signer, contractWithSigner } = require('../config/ethersConfig');
 
 const mintNFT = async (req, res) => {

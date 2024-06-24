@@ -54,9 +54,6 @@ const mintNFT = async (req, res) => {
         await trans.wait();
         console.log("NFT Hash", trans.hash)
 
-        // Emit the event with the necessary details
-        // eventEmitter.emit('nftMinted', { name, description, image: ipfsResponse.data.image});
-
         return res.json({ message: "NFT Minted Successfully" });
 
     } catch (error) {

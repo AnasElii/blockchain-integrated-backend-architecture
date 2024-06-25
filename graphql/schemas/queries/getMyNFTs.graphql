@@ -1,0 +1,7 @@
+query getMyNFTs($owner: String!, $sortField: String, $sortOrder: Int, $limit: Int, $offset: Int) {
+    myNFTs(owner: $owner, sortField: $sortField, sortOrder: $sortOrder, limit: $limit, offset: $offset) {
+        nftID
+        name
+        image
+    }
+}

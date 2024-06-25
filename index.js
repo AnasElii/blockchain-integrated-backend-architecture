@@ -10,8 +10,8 @@ const { rootValue, schema } = require('./graphql/index');
 // Routes
 const mintNFT = require('./api/mintNFT');
 const { POST } = require('./api/nftToIPFS');
-const { fetchNFTs, fetchNFT, fetchNFTQuery } = require('./api/getNFTs');
-const { fetchMyNFTs, fetchMyNFTQuery } = require('./api/getMyNFTs');
+const { fetchNFTs, fetchNFT, fetchNFTQuery, fetchNFTsQuery } = require('./api/getNFTs');
+const { fetchMyNFTQuery } = require('./api/getMyNFTs');
 
 // Create an express server
 const app = express();
@@ -45,6 +45,7 @@ app.post('/api/mintNFT', upload.single('image'), mintNFT);
 app.post('/api/fetchNFTs', fetchNFTs);
 app.post('/api/fetchNFT', upload.single('image'), fetchNFT);
 app.post('/api/fetchNFTQuery', upload.single('image'), fetchNFTQuery);
+app.post('/api/fetchMyNFTQuery', upload.single('image'), fetchNFTsQuery);
 app.post('/api/fetchMyNFTQuery', upload.single('image'), fetchMyNFTQuery);
 
 // Handle POST requests

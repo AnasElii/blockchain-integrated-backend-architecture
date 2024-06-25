@@ -19,9 +19,9 @@ type User{
 }
 
 type Query{
-    nfts: [NFT]!
+    nfts( sortField: String, sortOrder: Int, limit: Int, offset: Int ): [NFT]!
     nft(id: ID!): NFT!
-    myNFTs(owner: String!, limit: Int, offset: Int): [NFT]!
+    myNFTs(owner: String!, sortField: String, sortOrder: Int, limit: Int, offset: Int): [NFT]!
     users: [User]!
     user(id: ID!): User!
 }

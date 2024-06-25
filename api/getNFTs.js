@@ -1,5 +1,7 @@
-const nftModel = require('../models/nftModel');
+const { readFileSync } = require('fs');
+const path = require('path');
 
+const nftModel = require('../models/nftModel');
 
 const fetchNFTs = async (req, res) => {
     try {
@@ -42,18 +44,13 @@ const fetchNFTQuery = async (req, res) => {
             return res.status(400).json({ error: 'No ID provided' });
         }
 
-        const query = `
-        query {
-            nft(id: "${id}") {
-                nftID
-                name
-                description
-                owner
-                price
-                image
-            }
+        function getQuery() {
+            return readFileSync('./graphql/schemas/queries/fetchNFT.graphql', 'utf-8');
         }
-        `;
+
+        const query = getQuery();
+        const variables = { id };
+
 
         // const NFT = await nftModel.findById(id);
         const response = await fetch(`http://localhost:${process.env.PORT}/graphql`, {
@@ -62,10 +59,8 @@ const fetchNFTQuery = async (req, res) => {
                 "Content-Type": "application/json",
                 'Accept': 'application/json',
             },
-            body: JSON.stringify({ query }),
+            body: JSON.stringify({ query, variables }),
         })
-            // .then(r => r.json())
-            // .then(data => console.log('data returned:', data));
 
         // Check for successful response
         if (!response.status === 200) {
@@ -83,4 +78,40 @@ const fetchNFTQuery = async (req, res) => {
 
 }
 
-module.exports = { fetchNFTs, fetchNFT, fetchNFTQuery };
+const fetchNFTsQuery = async (req, res) => {
+    try {
+
+        function getQuery() {
+            return readFileSync('./graphql/schemas/queries/fetchNFTs.graphql', 'utf-8');
+        }
+
+        const query = getQuery();
+        const variables = { sortField: `_id`, sortOrder: -1, limit: 5, offset: 0};
+
+        const response = await fetch(`http://localhost:${process.env.PORT}/graphql`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ query, variables }),
+        })
+
+        // Check for successful response
+        if (!response.status === 200) {
+            throw new Error(`Error getting NFT: ${response.statusText}`);
+        }
+
+        NFT = await response.json();
+
+        res.status(200).json({ NFT });
+        console.log("NFT: ", NFT);
+    } catch (error) {
+        console.error("Error getting NFT: ", error);
+        res.status(500).json({ error: error.message });
+    }
+
+}
+
+
+module.exports = { fetchNFTs, fetchNFT, fetchNFTQuery, fetchNFTsQuery };

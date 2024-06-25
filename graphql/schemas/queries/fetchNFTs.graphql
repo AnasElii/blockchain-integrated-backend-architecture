@@ -1,0 +1,10 @@
+query fetchNFTs($sortField: String, $sortOrder: Int, $limit: Int, $offset: Int) {
+    nfts(sortField: $sortField, sortOrder: $sortOrder, limit: $limit, offset: $offset) {
+        nftID
+        name
+        description
+        owner
+        price
+        image
+    }
+}

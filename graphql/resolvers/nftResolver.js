@@ -2,9 +2,11 @@ const nftModel = require('../../models/nftModel');
 
 const nftResolver = {
     Query: {
-        nfts: async () => {
+        nfts: async (args) => {
             try {
-                const nfts = await nftModel.find();
+                const { limit, offset, sortField, sortOrder } = args;
+                const sort = { [sortField]: sortOrder };
+                const nfts = await nftModel.find().sort(sort).limit(limit).skip(offset);
                 return nfts;
             } catch (err) {
                 throw new Error(err);
@@ -24,11 +26,14 @@ const nftResolver = {
         },
         myNFTs: async (args) => {
             try {
-                const { owner, limit, offset } = args;
+                const { owner, limit, offset, sortField, sortOrder } = args;
                 if (!owner) {
                     throw new Error("Owner is required to fetch NFTs");
                 }
-                const nfts = await nftModel.find({ owner }).limit(limit).skip(offset);
+
+                const sort = { [sortField]: sortOrder };
+
+                const nfts = await nftModel.find({ owner }).sort(sort).limit(limit).skip(offset);
                 return nfts;
             } catch (err) {
                 throw new Error(err);

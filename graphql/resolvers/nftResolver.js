@@ -9,6 +9,30 @@ const nftResolver = {
             } catch (err) {
                 throw new Error(err);
             }
+        },
+        nft: async (args) => {
+            try {
+                const { id } = args;
+                if (!id) {
+                    throw new Error("NFT ID is required to fetch an NFT");
+                }
+                const nft = await nftModel.findById(id);
+                return nft;
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+        myNFTs: async (args) => {
+            try {
+                const { owner, limit, offset } = args;
+                if (!owner) {
+                    throw new Error("Owner is required to fetch NFTs");
+                }
+                const nfts = await nftModel.find({ owner }).limit(limit).skip(offset);
+                return nfts;
+            } catch (err) {
+                throw new Error(err);
+            }
         }
     },
     Mutation: {
@@ -44,7 +68,7 @@ const nftResolver = {
         updateNFT: async (args) => {
             try {
                 const { id, name, description, owner, price } = args;
-                
+
                 if (!id) {
                     throw new Error("NFT ID is required to update an NFT");
                 }

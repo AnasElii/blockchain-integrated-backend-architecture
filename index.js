@@ -6,11 +6,18 @@ const multer = require('multer');
 const connectDB = require('./config/db');
 const nftEventHandler = require('./event/nftEventHandler');
 const { rootValue, schema } = require('./graphql/index');
+
+// Routes
 const mintNFT = require('./api/mintNFT');
 const { POST } = require('./api/nftToIPFS');
+const { fetchNFTs, fetchNFT, fetchNFTQuery } = require('./api/getNFTs');
+const { fetchMyNFTs, fetchMyNFTQuery } = require('./api/getMyNFTs');
 
 // Create an express server
 const app = express();
+
+// Parse URL-encoded bodies (as sent by HTML forms)
+app.use(express.urlencoded({ extended: true }));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -35,6 +42,10 @@ nftEventHandler();
 
 // Routes
 app.post('/api/mintNFT', upload.single('image'), mintNFT);
+app.post('/api/fetchNFTs', fetchNFTs);
+app.post('/api/fetchNFT', upload.single('image'), fetchNFT);
+app.post('/api/fetchNFTQuery', upload.single('image'), fetchNFTQuery);
+app.post('/api/fetchMyNFTQuery', upload.single('image'), fetchMyNFTQuery);
 
 // Handle POST requests
 app.post('/api/nftToIPFS', upload.single('image'), POST);

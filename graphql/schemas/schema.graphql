@@ -21,6 +21,7 @@ type User{
 type Query{
     nfts: [NFT]!
     nft(id: ID!): NFT!
+    myNFTs(owner: String!, limit: Int, offset: Int): [NFT]!
     users: [User]!
     user(id: ID!): User!
 }

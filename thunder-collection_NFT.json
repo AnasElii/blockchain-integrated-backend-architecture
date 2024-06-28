@@ -1,0 +1,179 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "NFT",
+    "collectionId": "969e2a72-8d91-40e8-b695-60dd395d5f2d",
+    "dateExported": "2024-06-28T19:40:59.471Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "23408e43-45f9-425c-9a63-171053e71e09",
+            "colId": "969e2a72-8d91-40e8-b695-60dd395d5f2d",
+            "containerId": "",
+            "name": "Mint NFT",
+            "url": "http://localhost:4000/api/mintNFT",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-06-28T19:38:46.298Z",
+            "modified": "2024-06-28T19:38:46.298Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "name",
+                    "value": "NFT 1",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "description",
+                    "value": "NFT 1 description",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "price",
+                    "value": "10000",
+                    "isDisabled": true,
+                    "isPath": false
+                },
+                {
+                    "name": "image",
+                    "value": "",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "NFT 8"
+                    },
+                    {
+                        "name": "description",
+                        "value": "NFT 8 description"
+                    },
+                    {
+                        "name": "price",
+                        "value": "0.01"
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "image",
+                        "value": "c:\\Users\\anino\\Pictures\\Screenshots\\Screenshot 2024-06-13 134412.png"
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "97faef8f-b5d7-4ddc-97a6-6ffa87d4dfaf",
+            "colId": "969e2a72-8d91-40e8-b695-60dd395d5f2d",
+            "containerId": "",
+            "name": "Buy NFT",
+            "url": "http://localhost:4000/api/buyNFT",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-06-28T19:40:07.454Z",
+            "modified": "2024-06-28T19:40:07.454Z",
+            "headers": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "id",
+                        "value": "26"
+                    },
+                    {
+                        "name": "price",
+                        "value": "0.08"
+                    },
+                    {
+                        "name": "owner",
+                        "value": "0xC44F25B188cF12f3Ba690017F968063D58f7B97C"
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "ef5ef54a-e7b2-49a4-a39a-5e8603de37d1",
+            "colId": "969e2a72-8d91-40e8-b695-60dd395d5f2d",
+            "containerId": "",
+            "name": "fetchNFTs - Query",
+            "url": "http://localhost:4000/api/fetchNFTsQuery",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-06-28T19:40:17.421Z",
+            "modified": "2024-06-28T19:40:17.421Z",
+            "headers": []
+        },
+        {
+            "_id": "294605c7-1902-45d1-bf0a-41d9e4a52edf",
+            "colId": "969e2a72-8d91-40e8-b695-60dd395d5f2d",
+            "containerId": "",
+            "name": "fetchMyNFT - Query",
+            "url": "http://localhost:4000/api/fetchMyNFTQuery",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2024-06-28T19:40:36.668Z",
+            "modified": "2024-06-28T19:40:36.668Z",
+            "headers": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "owner",
+                        "value": "0xC44F25B188cF12f3Ba690017F968063D58f7B97C"
+                    },
+                    {
+                        "name": "other info",
+                        "value": "this is other info",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "image",
+                        "value": "this is an image :)",
+                        "isDisabled": true
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "8c160038-e168-4b70-a1f0-6c54ea2873e2",
+            "colId": "969e2a72-8d91-40e8-b695-60dd395d5f2d",
+            "containerId": "",
+            "name": "fetchNFT - Query",
+            "url": "http://localhost:4000/api/fetchNFTQuery",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2024-06-28T19:40:43.598Z",
+            "modified": "2024-06-28T19:40:43.598Z",
+            "headers": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "id",
+                        "value": "66782d298127376181c54ee0"
+                    },
+                    {
+                        "name": "other info",
+                        "value": "this is other info",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "image",
+                        "value": "this is an image :)",
+                        "isDisabled": true
+                    }
+                ]
+            }
+        }
+    ],
+    "ref": "_iWdX7IiYNqWYh4jPb5D20Dihg_TPvKxXY0QwPHxjw2uqG7UcdEJ7IDRIVETA1Yc5-0fElmyWdGCEBEID4ugOw"
+}

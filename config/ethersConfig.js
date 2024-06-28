@@ -17,10 +17,15 @@ const mainSigner = new ethers.Wallet(process.env.SEPOLIA_MAIN_PRIVATE_KEY, provi
 const secondarySigner = new ethers.Wallet(process.env.SEPOLIA_SECONDARY_PRIVATE_KEY, provider);
 
 // Interacting with the contract
-const contractWithSigner = new ethers.Contract(
-    process.env.NFT_MARKETPLACE_CONTRACT_ADDRESS,
-    NFTMarketplace.abi,
-    mainSigner
-)
+const contractWithSigner = async (signer) => {
 
-module.exports = {provider, mainSigner, secondarySigner, contractWithSigner, contractWithProvider};
+    const newSigner = new ethers.Wallet(signer, provider);
+
+    return new ethers.Contract(
+        process.env.NFT_MARKETPLACE_CONTRACT_ADDRESS,
+        NFTMarketplace.abi,
+        newSigner
+    )
+};
+
+module.exports = { provider, mainSigner, secondarySigner, contractWithSigner, contractWithProvider };

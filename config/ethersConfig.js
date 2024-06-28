@@ -13,13 +13,14 @@ const contractWithProvider = new ethers.Contract(
 )
 
 // Wallet setup
-const signer = new ethers.Wallet(process.env.SEPOLIA_MAIN_PRIVATE_KEY, provider);
+const mainSigner = new ethers.Wallet(process.env.SEPOLIA_MAIN_PRIVATE_KEY, provider);
+const secondarySigner = new ethers.Wallet(process.env.SEPOLIA_SECONDARY_PRIVATE_KEY, provider);
 
 // Interacting with the contract
 const contractWithSigner = new ethers.Contract(
     process.env.NFT_MARKETPLACE_CONTRACT_ADDRESS,
     NFTMarketplace.abi,
-    signer
+    mainSigner
 )
 
-module.exports = {provider, signer, contractWithSigner, contractWithProvider};
+module.exports = {provider, mainSigner, secondarySigner, contractWithSigner, contractWithProvider};

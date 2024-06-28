@@ -1,5 +1,5 @@
-query getAllNFTs($id: ID!, $sortField: String, $sortOrder: Int, $limit: Int, $offset: Int) {
-    nft(id: $id, sortField: $sortField, sortOrder: $sortOrder, limit: $limit, offset: $offset) {
+query getAllNFTs($id: ID!) {
+    nft(id: $id) {
         nftID
         name
         description

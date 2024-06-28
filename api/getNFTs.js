@@ -86,7 +86,7 @@ const fetchNFTsQuery = async (req, res) => {
         }
 
         const query = getQuery();
-        const variables = { sortField: `_id`, sortOrder: -1, limit: 5, offset: 0};
+        const variables = { sortField: `_id`, sortOrder: -1 };
 
         const response = await fetch(`http://localhost:${process.env.PORT}/graphql`, {
             method: "POST",

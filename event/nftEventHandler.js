@@ -2,7 +2,6 @@ const ethers = require('ethers');
 const axios = require('axios');
 
 const nftModel = require('../models/nftModel');
-const eventEmitter = require('./eventEmitter');
 const { contractWithProvider } = require('../config/ethersConfig');
 
 const nftEventHandler = async () => {
@@ -39,15 +38,20 @@ const nftEventHandler = async () => {
 
     });
 
-    contractWithProvider.on("NFTTransfer", async (id, seller, buyer) => {
+    contractWithProvider.on("NFTTransfer", async (id, seller, buyer, price) => {
         try {
             if (!id) {
                 throw new Error("NFT ID is required to update an NFT");
             }
 
-            await nftModel.findByIdAndUpdate(id, {
-                name: "NFT",
-                description: "NFT",
+            const nft = await nftModel.findOne({ nftID: id });
+            if (!nft) {
+                throw new Error("NFT not found");
+            }
+
+            await nftModel.findOneAndUpdate({ nftID: id }, {
+                name: nft.name,
+                description: nft.description,
                 owner: buyer,
                 price,
             }, { new: true });

@@ -1,0 +1,6 @@
+mutation updateNFT($id: ID!, $name: String, $description: String, $owner: ID, $price: Float){
+  updateNFT(id: $id, name: $name, description: $description, owner: $owner, price: $price){
+    id
+    nftID
+  }
+}

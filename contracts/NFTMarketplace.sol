@@ -28,7 +28,8 @@ contract NFTMarketplace is ERC721URIStorage {
     event NFTTransfer(
         uint indexed id,
         address payable seller,
-        address payable buyer
+        address payable buyer,
+        uint price
     );
 
     constructor() ERC721("TinTonNFT", "TNNFT") {
@@ -40,7 +41,7 @@ contract NFTMarketplace is ERC721URIStorage {
         return Counters.current(_nftIds);
     }
 
-     function getListingPrice() external view returns (uint) {
+    function getListingPrice() external view returns (uint) {
         return listingPrice;
     }
 
@@ -51,10 +52,7 @@ contract NFTMarketplace is ERC721URIStorage {
     function mintNFT(string memory _tokenURI, uint price) external payable {
         uint nftId = Counters.current(_nftIds);
 
-        require(
-            msg.value >= listingPrice,
-            "Insufficient funds sent"
-        );
+        require(msg.value >= listingPrice, "Insufficient funds sent");
 
         _safeMint(msg.sender, nftId);
         _setTokenURI(nftId, _tokenURI);
@@ -93,16 +91,13 @@ contract NFTMarketplace is ERC721URIStorage {
 
         require(msg.value == price, "Incorrect payment amount");
 
-        (bool transferNFTPriceSuccess, ) = payable(seller).call{value: msg.value}(
-            ""
-        );
+        (bool transferNFTPriceSuccess, ) = payable(seller).call{
+            value: msg.value
+        }("");
 
-        require(
-            transferNFTPriceSuccess,
-            "Transfering ETH failed"
-        );
+        require(transferNFTPriceSuccess, "Transfering ETH failed");
 
-        emit NFTTransfer(id, seller, buyer);
+        emit NFTTransfer(id, seller, buyer, msg.value);
 
         _idToNFT[id].owner = payable(buyer);
         _transfer(seller, buyer, id);

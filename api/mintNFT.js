@@ -3,7 +3,7 @@ const ethers = require('ethers');
 const FormData = require('form-data');
 require('dotenv').config();
 
-const { provider, signer, contractWithSigner } = require('../config/ethersConfig');
+const { provider, mainSigner, contractWithSigner } = require('../config/ethersConfig');
 
 const mintNFT = async (req, res) => {
     try {
@@ -17,7 +17,7 @@ const mintNFT = async (req, res) => {
         }
 
         // Convert the price to Wei
-        const balance = await provider.getBalance(signer.address);
+        const balance = await provider.getBalance(mainSigner.address);
         const NFTPriceInWei = ethers.parseEther(price);
 
         // Form data for the IPFS request
@@ -44,17 +44,17 @@ const mintNFT = async (req, res) => {
         const listingPrice = await contractWithSigner.listingPrice();
 
         // Minting the NFT
-        let trans = await contractWithSigner.mintNFT(
+        let transaction = await contractWithSigner.mintNFT(
             NFT_URI,
             NFTPriceInWei,
             { value: listingPrice }
         );
 
-        await trans.wait();
-        console.log("NFT Hash", trans.hash)
+        await transaction.wait();
 
-        return res.json({ message: "NFT Minted Successfully" });
-
+        if (transaction) {
+            return res.status(200).json({ message: "NFT Minted Successfully" });
+        }
     } catch (error) {
         console.error("Error minting NFT: ", error);
         res.status(500).json({ error: error.message });

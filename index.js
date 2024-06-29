@@ -53,7 +53,6 @@ app.post('/api/fetchNFT', upload.none(), fetchNFT);
 app.post('/api/fetchNFTsQuery', fetchNFTsQuery);
 app.post('/api/fetchNFTQuery', upload.none(), fetchNFTQuery);
 app.post('/api/fetchMyNFTQuery', upload.none(), fetchMyNFTQuery);
-app.post('/api/buyNFT', upload.none(), buyNFT);
 app.post('/api/updateNFTQuery', upload.none(), updateNFTQuery);
 
 // Handle POST requests

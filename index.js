@@ -44,7 +44,7 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 // Listen for NFT events
-// nftEventHandler();
+nftEventHandler();
 
 // Routes
 app.post('/api/mintNFT', upload.single('image'), mintNFT);
